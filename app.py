@@ -114,8 +114,7 @@ def accept_selection():
     selected_class = request.values.get("selected_class", None)
     if selected_class:
         resp = make_response(redirect(url_for("route")))
-        resp.set_cookie("class", selected_class)
-        resp.set_cookie("extracurricular")
+        resp.set_cookie("class", selected_class, expires=(datetime.now() + timedelta(days=365)))
         return resp
     else:
         return redirect(url_for("route"))
