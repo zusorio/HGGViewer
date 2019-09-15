@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Klasse auswählen</title>
+</head>
+<body>
+<div class="container" style="padding-top: 30px">
+    <h1>Wähle deine Klasse aus. Du kannst sie später ändern</h1>
+
+    <form action="/select/submit/" method="post">
+        <select id="class" class="select_class" name="selected_class">
+            {% for available_class in available_classes %}
+                <option value="{{ available_class }}" class="select_class">{{ available_class }}</option>
+            {% endfor %}
+        </select>
+{#        {% for other_class in other_classes %}#}
+{#            <input type="checkbox" id="extracurricular" name="extracurricular">#}
+{#        {% endfor %}#}
+{#        <input type="checkbox" id="extracurricular" name="extracurricular">#}
+{#        <label class="label-inline" for="extracurricular">AG's interessieren mich</label>#}
+{#        <br>#}
+        <input type="submit" value="Los geht's">
+
+    </form>
+
+
+</div>
+</body>
+</html>
