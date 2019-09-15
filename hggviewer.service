@@ -1,0 +1,14 @@
+[Unit]
+Description=Service for HGG Viewer app
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=tobi
+WorkingDirectory=/home/tobi/HGGViewer
+ExecStart=/usr/local/bin/gunicorn app:app -b 0.0.0.0:7000
+
+[Install]
+WantedBy=multi-user.target
