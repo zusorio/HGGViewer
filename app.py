@@ -1,10 +1,20 @@
 import ast
 import re
 import requests
+from functools import wraps
 from datetime import datetime, timedelta, date
 from flask import Flask, redirect, request, render_template, url_for, make_response
 
 app = Flask(__name__)
+
+
+def need_cookies(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.cookies.get("cookies") != "yes":
+            return redirect(url_for("route"))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def start_of_week(week):
@@ -28,6 +38,8 @@ def get_class_list():
 
 def get_class_info(class_name):
     class_list = get_class_list()
+    if class_name not in class_list[0]:
+        return None
     if class_list:
         zeros_required = 5 - len(str(class_list[0].index(class_name)))
         c_key = "c" + zeros_required * "0" + str(class_list[0].index(class_name) + 1)
@@ -47,6 +59,8 @@ def get_class_info(class_name):
 
 def get_plans(class_name):
     class_info = get_class_info(class_name)
+    if not class_info:
+        return None
     current_week = datetime.now()
     test_weeks = [(current_week + timedelta(weeks=x)).isocalendar()[1] for x in range(-1, 5)]
 
@@ -94,13 +108,21 @@ def get_plans(class_name):
 
 @app.route("/")
 def route():
-    if request.cookies.get("class"):
-        return redirect(url_for("plan"))
+    cookies = request.cookies.get("cookies")
+    if cookies:
+        if cookies == "yes":
+            if request.cookies.get("class"):
+                return redirect(url_for("plan"))
+            else:
+                return redirect(url_for("select"))
+        else:
+            return redirect(url_for("no_cookies"))
     else:
-        return redirect(url_for("select"))
+        return redirect(url_for("cookies"))
 
 
 @app.route("/select/")
+@need_cookies
 def select():
     class_list = get_class_list()
     if class_list:
@@ -110,6 +132,7 @@ def select():
 
 
 @app.route("/select/submit/", methods=["POST"])
+@need_cookies
 def accept_selection():
     selected_class = request.values.get("selected_class", None)
     if selected_class:
@@ -121,14 +144,55 @@ def accept_selection():
 
 
 @app.route("/plan/")
+@need_cookies
 def plan():
     class_name = request.cookies.get("class")
     if class_name:
         available_plans = get_plans(class_name)
+        if not available_plans:
+            return "Hmm... Irgendwas ist falsch gelaufen"
         info = get_class_info(class_name)
         return render_template("view.html", available_plans=available_plans, info=info)
     else:
         return redirect(url_for("select"))
+
+
+@app.route("/plan/nocookies/")
+def no_cookies():
+    class_list = get_class_list()
+    if class_list:
+        return render_template("select_no_cookies.html", available_classes=class_list[0])
+    else:
+        return "Irgendwas ist falsch gelaufen... Tut uns leid"
+
+
+@app.route("/plan/nocookies/view/")
+def no_cookies_view():
+    class_name = request.args.get("selected_class")
+    available_plans = get_plans(class_name)
+    if not available_plans:
+        return "Hmm... Irgendwas ist falsch gelaufen"
+    info = get_class_info(class_name)
+    return render_template("view.html", available_plans=available_plans, info=info)
+
+
+@app.route("/cookies/")
+def cookies():
+    return render_template("cookies.html")
+
+
+@app.route("/cookies/accept/")
+def cookies_accept():
+    resp = make_response(redirect(url_for("route")))
+    resp.set_cookie("cookies", "yes", expires=(datetime.now() + timedelta(days=365)))
+    return resp
+
+
+@app.route("/cookies/decline/")
+def cookies_decline():
+    resp = make_response(redirect(url_for("route")))
+    resp.set_cookie("cookies", "no", expires=(datetime.now() + timedelta(days=365)))
+    return resp
 
 
 if __name__ == '__main__':

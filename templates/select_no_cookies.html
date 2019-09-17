@@ -10,26 +10,18 @@
 </head>
 <body>
 <div class="container" style="padding-top: 30px">
-    <h1>Wähle deine Klasse aus. Du kannst sie später ändern</h1>
-    <p><a href="{{ url_for('cookies') }}">Cookie-Einstellungen</a></p>
-
-    <form action="/select/submit/" method="post">
+    <h1>Wähle deine Klasse aus.</h1>
+    <h2 style="color: red">Cookies sind aus. Deine auswahl wird nicht gespeichert. <a href="{{ url_for('cookies') }}">Einstellungen ändern</a></h2>
+    <form action="/plan/nocookies/view/" method="get">
         <select id="class" class="select_class" name="selected_class">
             {% for available_class in available_classes %}
                 <option value="{{ available_class }}" class="select_class">{{ available_class }}</option>
             {% endfor %}
         </select>
-{#        {% for other_class in other_classes %}#}
-{#            <input type="checkbox" id="extracurricular" name="extracurricular">#}
-{#        {% endfor %}#}
-{#        <input type="checkbox" id="extracurricular" name="extracurricular">#}
-{#        <label class="label-inline" for="extracurricular">AG's interessieren mich</label>#}
-{#        <br>#}
+
         <input type="submit" value="Los geht's">
 
     </form>
-
-
 </div>
 </body>
 </html>
