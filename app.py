@@ -118,7 +118,7 @@ def route():
         else:
             return redirect(url_for("no_cookies"))
     else:
-        return redirect(url_for("cookies"))
+        return render_template("landing.html")
 
 
 @app.route("/select/")
