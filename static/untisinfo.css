@@ -1,0 +1,253 @@
+body	/* general body */
+{
+  color: #000000;
+	background-color : #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+table.subst,
+table.break,
+th.list,
+td.list,
+th.break,
+td.break
+{
+	background-color: #FFFFFF;
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+	margin: 0px;
+	border-collapse:collapse;
+	padding: 3px;
+}
+
+table,
+td,
+th
+{
+	border-color: #7E2F4A;
+}
+
+#vertretung table th.list,
+#vertretung table td.list
+{
+	background-color: none;
+	border: none;
+	border-style: none;
+	border-color: none;
+}
+
+#vertretung {
+  font: small Arial, Helvetica, sans-serif;
+}
+
+#vertretung table {
+  font-size: small;
+  color: #000000;
+  width: 1000px;
+}
+
+#vertretung table th, #vertretung table th.list
+{
+  background-color: #7E2F4A;
+  color: #FFFFFF;
+}
+
+#vertretung table th, #vertretung table td
+{
+    padding: 8px 4px;
+}
+
+#vertretung tr.odd, #vertretung tr.odd td
+{
+	background-color: #FFFF97;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #7E2F4A;
+}
+
+#vertretung tr.even, #vertretung tr.even td
+{
+	background-color: #FFFFFF;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #7E2F4A;
+}
+
+#vertretung a
+{
+    color: #666666;
+	text-decoration: none;
+}
+
+#vertretung a:hover
+{
+    color: #7E2F4A;
+}
+
+body.nav
+{
+	margin-left:0;
+	margin-right:0;
+	margin-top:0;
+    color: #000000;
+	background-color : #7E2F4A;
+}
+
+body.fuss
+{
+	margin-left:0;
+	margin-right:0;
+	margin-top:0;
+    color: #000000;
+	background-color : #FFFFFF;
+}
+
+body.title
+{
+	margin-left:0;
+	margin-right:0;
+	margin-top:0;
+    color: #000000;
+	background-color : #FFFFFF;
+}
+
+body.welcome
+{
+	text-align: center;
+}
+
+div.welcome
+{
+	position: fixed;
+    top: 200px;
+	width: 100%;
+	text-align: center;
+}
+
+body.tt	/* body for timetables */
+{
+    color: #000000;
+	background-color : #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.selection
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 10px;
+         font-style: normal;
+         line-height: normal;
+         font-weight: 900;
+         font-variant: normal;
+         text-transform: none;
+         color: #000000;
+}
+
+.schoolname
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 10px;
+         font-style: normal;
+         line-height: normal;
+         font-weight: 900;
+         font-variant: normal;
+         text-transform: none;
+         color: #000000;
+}
+
+.description
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 9px;
+         font-style: normal;
+         line-height: 12px;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         color: #000000;
+}
+
+.footer
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 9px;
+         font-style: normal;
+         line-height: 12px;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         color: #000000;
+}
+
+.absatz
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 2px;
+         font-style: normal;
+         line-height: normal;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         color: #FFFFFF;
+}
+
+.absatz_gross
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 6px;
+         font-style: normal;
+         line-height: normal;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         color: #FFFFFF;
+}
+
+.tabelle
+{
+	vertical-align: top;
+	padding-top: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	background-color : #FFFF97;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #7E2F4A;
+}
+
+.selectbox
+{
+         width: 120px;
+}
+
+.symbol
+{
+         border-width: 0px;
+         vertical-align: middle;
+}
+
+a:link  {
+	COLOR : #FF8000;
+}
+
+a:active  {
+	COLOR : #33FF00;
+}
+
+a:hover  {
+	COLOR : blue;
+}
+
+a:visited  {
+	COLOR : #FF8000;
+}
+
+
+
+
+
+

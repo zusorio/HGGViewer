@@ -1,11 +1,14 @@
 import ast
 import re
 import requests
+import requests_cache
 from functools import wraps
 from datetime import datetime, timedelta, date
 from flask import Flask, redirect, request, render_template, url_for, make_response
 
 app = Flask(__name__)
+requests_cache.install_cache(backend="memory", expire_after=3)
+session = requests.Session()
 
 
 def need_cookies(f):
@@ -23,7 +26,7 @@ def start_of_week(week):
 
 def get_class_list():
     try:
-        response = requests.get(
+        response = session.get(
             "http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/frames/navbar.htm")
     except requests.exceptions.ConnectionError:
         return None
@@ -44,7 +47,7 @@ def get_class_info(class_name):
         zeros_required = 5 - len(str(class_list[0].index(class_name)))
         c_key = "c" + zeros_required * "0" + str(class_list[0].index(class_name) + 1)
         current_week_number = datetime.now().isocalendar()[1]
-        response = requests.get(
+        response = session.get(
             f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{current_week_number}/c/{c_key}.htm")
         info = re.search('([0-9][0-9]?[A-F]|[0-9]{4})(&nbsp;</font><fontface="Arial">)([A-Z]{3}|[0-9]{4})',
                          response.text.replace(" ", "").replace("\n", ""))
@@ -62,15 +65,15 @@ def get_plans(class_name):
     if not class_info:
         return None
     current_week = datetime.now()
-    test_weeks = [(current_week + timedelta(weeks=x)).isocalendar()[1] for x in range(-1, 5)]
+    test_weeks = [(current_week + timedelta(weeks=x)).isocalendar()[1] for x in range(5)]
 
     available_plans = []
     for week in test_weeks:
-        response = requests.get(
+        response = session.get(
             f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{week}/c/{class_info['c_key']}.htm")
         if response.status_code == 200:
             fixed_html = response.text.replace("../../untisinfo.css",
-                                               "http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/untisinfo.css").replace(
+                                               url_for("static", filename="untisinfo.css")).replace(
                 "\n", "")
 
             pattern = '<font size="6" face="Arial" color="#0000FF">(.*)&nbsp;</font>'
