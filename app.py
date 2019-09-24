@@ -155,7 +155,7 @@ def plan():
         if not available_plans:
             return "Hmm... Irgendwas ist falsch gelaufen"
         info = get_class_info(class_name)
-        return render_template("view.html", available_plans=available_plans, info=info)
+        return render_template("view.html", available_plans=available_plans, info=info, cookies_allowed=True)
     else:
         return redirect(url_for("select"))
 

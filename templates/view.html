@@ -12,3 +12,10 @@
     {% endfor %}
 </div>
 {% endblock %}
+{% block after_tracking %}
+    {% if cookies_allowed %}
+        <script>
+            _paq.push(['setConsentGiven']);
+        </script>
+    {% endif %}
+{% endblock %}
