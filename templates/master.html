@@ -12,10 +12,13 @@
 <body>
 {% block body %}
 {% endblock %}
+{% block tracking %}
 <!-- Matomo -->
     <script type="text/javascript">
         var _paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        // require user consent before processing data
+        _paq.push(['requireConsent']);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function () {
@@ -31,5 +34,7 @@
         })();
     </script>
     <!-- End Matomo Code -->
+{% endblock %}
+{% block after_tracking %}{% endblock %}
 </body>
 </html>

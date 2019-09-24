@@ -32,31 +32,32 @@
 {% block body %}
     <div class="container" style="padding-top: 30px">
         <h1>Cookie-Einstellungen</h1>
-        <p>Wir benutzen Cookies, damit du nicht jedes mal deine Klasse aussuchen musst. Wir tracken dich nicht und
-            speichern
-            auch keine Informationen über dich. Du kannst deine Auswahl jederzeit hier Ändern.</p>
-        <button class="button button-outline mobileHide" onclick="location.href = '{{ url_for('cookies_decline') }}'">
+        <p>Wir benutzen Cookies, damit du nicht jedes mal deine Klasse aussuchen musst. Wir benutzen auch Matamo um mehr
+            über das Verhalten unserer Nutzer zu lernen. Du kannst deine Auswahl jederzeit hier Ändern. <a href="{{ url_for("privacy") }}">Mehr info</a></p>
+        <button class="button button-outline mobileHide" onclick="decline_cookies()">
             Keine
             Cookies (Jedes mal neu Klasse aussuchen)
         </button>
         <button class="button button-outline mobileShow" style="height: 80px"
-                onclick="location.href = '{{ url_for('cookies_decline') }}'">Keine Cookies <br>(Jedes mal neu Klasse
+                onclick="decline_cookies()">Keine Cookies <br>(Jedes mal neu Klasse
             aussuchen)
         </button>
-        <button class="button mobileHide" onclick="location.href = '{{ url_for('cookies_accept') }}'">OK, mir doch egal
-        </button>
-        <button class="button mobileShow" style="height: 80px"
-                onclick="location.href = '{{ url_for('cookies_accept') }}'">
+        <button class="button mobileHide" onclick="accept_cookies()">OK, mir doch egal</button>
+        <button class="button mobileShow" style="height: 80px" onclick="accept_cookies()">
             OK, mir doch egal
         </button>
         <br>
-        <h2>Anderes Tracking</h2>
-        <p>Wir benutzen auch Matomo um mehr über das verhalten unserer Nutzer zu lernen. Dies kann hier abgeschaltet
-            werden.</p>
-        <iframe
-                style="border: 0; height: 200px; width: 100%;"
-                src="https://insights.zusor.org/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=&fontColor=&fontSize=11px&fontFamily=Arial"
-        ></iframe>
 
     </div>
+    <script>
+    function accept_cookies() {
+        _paq.push(['rememberConsentGiven']);
+        location.href = '{{ url_for('cookies_accept') }}'
+    }
+    
+    function decline_cookies() {
+         _paq.push(['forgetConsentGiven']);
+         location.href = '{{ url_for('cookies_decline') }}'
+    }
+    </script>
 {% endblock %}
