@@ -20,6 +20,17 @@ def need_cookies(f):
     return decorated_function
 
 
+def browser_error(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.user_agent.browser == "msie":
+            return "Internet Explorer?? Wirklich?? Dein Ernst?? Geht leider nicht (Microsoft's schuld). Tut uns leid. Benutze einen anderen Browser wie Firefox oder Chrome."
+        if request.user_agent.browser == "edge":
+            return "Edge funktioniert leider nicht (Microsoft's schuld). Tut uns leid. Benutze einen anderen Browser wie Firefox oder Chrome."
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 def start_of_week(week):
     return datetime.strptime(f"1 {week-1} {datetime.now().year}", "%w %W %Y")
 
@@ -110,6 +121,7 @@ def get_plans(class_name):
 
 
 @app.route("/")
+@browser_error
 def route():
     cookies = request.cookies.get("cookies")
     if cookies:
@@ -126,6 +138,7 @@ def route():
 
 @app.route("/select/")
 @need_cookies
+@browser_error
 def select():
     class_list = get_class_list()
     if class_list:
@@ -136,6 +149,7 @@ def select():
 
 @app.route("/select/submit/", methods=["POST"])
 @need_cookies
+@browser_error
 def accept_selection():
     selected_class = request.values.get("selected_class", None)
     if selected_class:
@@ -148,6 +162,7 @@ def accept_selection():
 
 @app.route("/plan/")
 @need_cookies
+@browser_error
 def plan():
     class_name = request.cookies.get("class")
     if class_name:
@@ -161,6 +176,7 @@ def plan():
 
 
 @app.route("/plan/nocookies/")
+@browser_error
 def no_cookies():
     class_list = get_class_list()
     if class_list:
@@ -170,6 +186,7 @@ def no_cookies():
 
 
 @app.route("/plan/nocookies/view/")
+@browser_error
 def no_cookies_view():
     class_name = request.args.get("selected_class")
     available_plans = get_plans(class_name)
@@ -180,11 +197,13 @@ def no_cookies_view():
 
 
 @app.route("/cookies/")
+@browser_error
 def cookies():
     return render_template("cookies.html")
 
 
 @app.route("/cookies/accept/")
+@browser_error
 def cookies_accept():
     resp = make_response(redirect(url_for("route")))
     resp.set_cookie("cookies", "yes", expires=(datetime.now() + timedelta(days=365)))
@@ -192,14 +211,17 @@ def cookies_accept():
 
 
 @app.route("/cookies/decline/")
+@browser_error
 def cookies_decline():
     resp = make_response(redirect(url_for("route")))
     resp.set_cookie("cookies", "no", expires=(datetime.now() + timedelta(days=365)))
     return resp
 
+
 @app.route("/privacy/")
 def privacy():
     return render_template("privacy.html")
+
 
 if __name__ == '__main__':
     app.run()
