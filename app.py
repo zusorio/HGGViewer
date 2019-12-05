@@ -60,7 +60,7 @@ def get_class_info(class_name):
         current_week_number = datetime.now().isocalendar()[1]
         response = session.get(
             f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{current_week_number}/c/{c_key}.htm")
-        info = re.search('([0-9][0-9]?[A-F]|[0-9]{4})(&nbsp;</font><fontface="Arial">)([A-Z]{3}|[0-9]{4})',
+        info = re.search('([0-9][0-9]?[A-F]|[0-9]{4})(&nbsp;</font><fontface="Arial">)([A-Z_ÄÖÜß]{3}|[0-9]{4})',
                          response.text.replace(" ", "").replace("\n", ""))
         class_name = info.group(1)
         teacher_name = info.group(3)
