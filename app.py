@@ -58,6 +58,8 @@ def get_class_info(class_name):
         zeros_required = 5 - len(str(class_list[0].index(class_name)))
         c_key = "c" + zeros_required * "0" + str(class_list[0].index(class_name) + 1)
         current_week_number = datetime.now().isocalendar()[1]
+        if len(str(current_week_number)) == 1:
+            current_week_number = "0" + str(current_week_number)
         response = session.get(
             f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{current_week_number}/c/{c_key}.htm")
         info = re.search('([0-9][0-9]?[A-F]|[0-9]{4})(&nbsp;</font><fontface="Arial">)([A-Z_ÄÖÜß]{3}|[0-9]{4})',
@@ -80,8 +82,11 @@ def get_plans(class_name):
 
     available_plans = []
     for week in test_weeks:
+        week_string = week
+        if len(str(week)) == 1:
+            week_string = "0" + str(week)
         response = session.get(
-            f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{week}/c/{class_info['c_key']}.htm")
+            f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{week_string}/c/{class_info['c_key']}.htm")
         if response.status_code == 200:
             fixed_html = response.text.replace("../../untisinfo.css",
                                                url_for("static", filename="untisinfo.css")).replace(
@@ -113,7 +118,7 @@ def get_plans(class_name):
                                 f'<font face="Arial">{target2}</font><BR><TABLE border="3" rules="all" cellpadding="1" cellspacing="1">',
                                 fixed_html)
             available_plans.append({
-                "url": f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{week}/c/{class_info['c_key']}.htm",
+                "url": f"http://www.hgg-markgroeningen.de/pages/hgg/verwaltung/vertretungsplan/Schueler/{week_string}/c/{class_info['c_key']}.htm",
                 "html": fixed_html,
                 "week": week
             })
