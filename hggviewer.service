@@ -6,9 +6,9 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-User=tobi
-WorkingDirectory=/home/tobi/HGGViewer
-ExecStart=/usr/local/bin/gunicorn app:app -b 0.0.0.0:7000
+User=tobias
+WorkingDirectory=/home/tobias/HGGViewer
+ExecStart=/usr/bin/pipenv run gunicorn app:app -b 0.0.0.0:7000
 
 [Install]
 WantedBy=multi-user.target
