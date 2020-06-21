@@ -55,7 +55,7 @@ def get_class_info(class_name):
     if class_name not in class_list[0]:
         return None
     if class_list:
-        zeros_required = 5 - len(str(class_list[0].index(class_name)))
+        zeros_required = 5 - len(str(class_list[0].index(class_name) + 1))
         c_key = "c" + zeros_required * "0" + str(class_list[0].index(class_name) + 1)
         current_week_number = datetime.now().isocalendar()[1]
         if len(str(current_week_number)) == 1:
