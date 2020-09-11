@@ -51,12 +51,11 @@
     </div>
     <script>
     function accept_cookies() {
-        _paq.push(['rememberConsentGiven']);
         location.href = '{{ url_for('cookies_accept') }}'
     }
     
     function decline_cookies() {
-         _paq.push(['forgetConsentGiven']);
+        window['ga-disable-UA-164284397-4'] = true;
          location.href = '{{ url_for('cookies_decline') }}'
     }
     </script>

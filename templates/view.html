@@ -13,9 +13,9 @@
 </div>
 {% endblock %}
 {% block after_tracking %}
-    {% if cookies_allowed %}
+    {% if not cookies_allowed %}
         <script>
-            _paq.push(['setConsentGiven']);
+                window['ga-disable-UA-164284397-4'] = true;
         </script>
     {% endif %}
 {% endblock %}
