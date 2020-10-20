@@ -12,6 +12,34 @@
 <body>
 {% block body %}
 {% endblock %}
+    <a href="https://zusor.io/" class="logo-link"><img class="logo" src="{{ url_for("static", filename="Zusor_Icon.svg") }}" alt="Zusor Logo"></a>
+<style>
+    @media (max-width: 700px) {
+        .logo-link {
+            text-align: center;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            height: 40px;
+            width: 40px;
+        }
+    }
+    @media (min-width: 700px) {
+        .logo-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .logo {
+            height: 40px;
+            width: 40px;
+        }
+    }
+
+</style>
 {% block tracking %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164284397-4"></script>
